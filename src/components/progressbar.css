@@ -1,0 +1,32 @@
+.progressbar {
+  margin: 0 auto;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.col-12{
+  width: 100%;
+  clear: both;
+  padding: 10px;
+}
+
+.col-6{
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+.progress{
+  background: green;
+  height: 20px;
+}
+
+.barWrapper{
+  position: relative;
+}
+
+.percent {
+  position: absolute;
+  top: 5px;
+  left: 45%;
+}
