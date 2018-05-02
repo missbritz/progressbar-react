@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-//import './progressbar.css';
 import Buttons from './buttons';
 import Handle from './handle';
 import Bar from './bar';
@@ -55,13 +54,18 @@ class ProgressBar extends Component {
     }
 
     componentWillMount () {
-        fetch('http://pb-api.herokuapp.com/bars')
+        this.loadBarData()
+    }
+
+    loadBarData = () => {
+        const bars = fetch('http://pb-api.herokuapp.com/bars')
             .then(response => response.json())
             .then(json => this.setState({
                 buttons: json.buttons,
                 bars: json.bars,
                 limit: json.limit
             }))
+        return bars
     }
 
     changeBar = (barId) => {
@@ -76,22 +80,13 @@ class ProgressBar extends Component {
             bars : barProgress
         })
     }  
-    
-    barExceeded = () => {
-        let status = this.state.progress
-        if (status > 100) {
-            return true;
-        } else{
-            return false;
-        }
-    }
 
     render () {
         return (
             <Wrapper className="progressbar">
                 <Row>
                     <Column className="column col-12">
-                        <Bar limit={this.state.limit} active={this.state.active} bars={this.state.bars} exceeded={this.barStatus}/>
+                        <Bar limit={this.state.limit} active={this.state.active} bars={this.state.bars}/>
                     </Column>
                 </Row>
                 <Row>

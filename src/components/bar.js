@@ -13,8 +13,13 @@ const Wrapper = styled.div`
 `
 
 const Progress = styled.div`
-    background: green;
     height: 20px;
+    &.normal{
+        background: green;
+    }
+    &.maxreached{
+        background: red;
+    }
 `
 
 const Percent = styled.p`
@@ -28,6 +33,7 @@ class Bar extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            exceed: '',
             ...this.props
         }
 
@@ -47,8 +53,17 @@ class Bar extends Component {
         //Set first bar value as default
         let barData = bar
         let active = bar.active
+        let newClass = this.state.exceed
         let percent = Math.floor((barData.bars[active] / barData.limit)*100)
+
+        if (percent > 100) {
+            newClass = 'maxreached'
+        } else {
+            newClass = 'normal'
+        }
+
         this.setState({
+            exceed: newClass,
             progress: percent
         })
     }
@@ -57,7 +72,7 @@ class Bar extends Component {
         return (
             <Wrapper value={this.props.value}>
                 <Percent>{this.state.progress}%</Percent>
-                <Progress style={{width: ((this.state.progress < 0) ? 0 : this.state.progress) + '%'}} />
+                <Progress className={this.state.exceed} style={{width: ((this.state.progress < 0) ? 0 : this.state.progress) + '%'}} />
             </Wrapper>
         );
     }
